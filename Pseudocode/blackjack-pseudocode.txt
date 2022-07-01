@@ -14,10 +14,10 @@
 				{value: 'Q', suit: 'clubs},
 				etc...
 			]
-	 2.2. betBtn (+ $5) (- $5) (will not be visible once cards are dealt)
-	 2.3. confirmBetBtn (will not be visible once confirmed/cards are dealt)
-         2.4. hitBtn (will only be visible after bet is confirmed and will disappear once player has a max of 5 cards in their hand without busting) - icebox - 5 card charlie
-         2.5. standBtn (will only be visible after bet is confirmed)
+	2.2. betBtn (+ $5) (- $5) (will not be visible once cards are dealt)
+	2.3. confirmBetBtn (will not be visible once confirmed/cards are dealt)
+	2.4. hitBtn (will only be visible after bet is confirmed and will disappear once player has a max of 5 cards in their hand without busting) - icebox - 5 card charlie
+	2.5. standBtn (will only be visible after bet is confirmed)
 
 3. Store elements on the page that will be accessed in code more than once in variables to make code more concise, readable and performant.
 	3.1. availableCash (will change depending on bet and win or lose)
@@ -38,13 +38,13 @@
 
 5. Handle the player confirming their bet
 	5.1. hit and stand buttons style are changed to visible
-        5.2. bet +$5 and bet -$5 buttons will be changed to invisible
+	5.2. bet +$5 and bet -$5 buttons will be changed to invisible
 
 6. Handle the player clicking hit
 	6.1. Player gets a new card given to them
-        6.2. playerCardValue gets increased
-            6.2.1. If the players gets an A, they will get a second score value, one being Ace representing 1 and the other Ace representing 11 (second counter is set to invisible if it goes above 21)
-        6.3. Repeat until the players busts, gets 21 or have 5 cards in their hand (if...if else...if else
+        	6.2. playerCardValue gets increased
+		6.2.1. If the players gets an A, they will get a second score value, one being Ace representing 1 and the other Ace representing 11 (second counter is set to invisible if it goes above 21)
+	6.3. Repeat until the players busts, gets 21 or have 5 cards in their hand (if...if else...if else
 		playerCardValue > 21 => bust
 		playerCardValue === 21 => win and round ends
 		playerCardValue < 21 => keep hitting until reach 5 cards or stand
