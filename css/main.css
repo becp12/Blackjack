@@ -2,6 +2,7 @@
     /* height & width now includes border & padding */
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 body {
@@ -27,16 +28,15 @@ h1 {
     grid-column: span 3;
     justify-content: center;
     align-items: center;
-    border: 1px solid blue;
     width: 100%;
     height: 100%;
-    font-size: 50px;
+    font-size: 15vmin;
 }
 
 #dealers-interface {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 20vmin 1fr;
     gap: 1vmin;
 }
 
@@ -47,6 +47,7 @@ h1 {
 .hand-header {
     font-weight: bold;
     text-align: center;
+    font-size: 4vmin;
 }
 
 .current-hand {
@@ -54,16 +55,14 @@ h1 {
     flex-direction: row;
 }
 
-
-
 .current-hand > div {
-    border: 1px dashed black;
+    border: 1px solid black;
 }
 
 #money-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 3fr 1fr 3fr;
+    grid-template-rows: 1fr 2fr 1fr 2fr;
 }
 
 #money-info > span {
@@ -78,14 +77,28 @@ h1 {
 }
 
 #bet-total, #bank-total, #bank, #current-bet {
-    text-align: center;
-    border: 1px solid orange;
+    border: 1px solid darkbrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bank, #current-bet {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+
+#bet-buttons > button {
+    font-size: 2vmin;
+    margin: 0 1vmin;
 }
 
 #players-hand-column {
     display: grid;
+    height: 100%;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 20vmin 20vmin;
+    grid-template-rows: 1fr 20vmin 10vmin;
     gap: 1vmin;
 }
 
@@ -98,6 +111,24 @@ h1 {
 }
 
 #hit-stand {
+    display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.hit-stnd-btn {
+    margin: 2vmin;
+    font-size: 7vmin;
+    height: 10vmin;
+
+}
+
+button {
+    border-radius: 3vmin;
+    background-color: lightskyblue;
+}
+
+button:hover {
+    background-color: purple;
 }
