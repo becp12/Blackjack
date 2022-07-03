@@ -60,14 +60,6 @@ function render() {
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
-    // Guard
-    if (confirmBtnEl.style.visibility === 'hidden' ||
-    plusFiveBtnEl.style.visibility === 'hidden' ||
-    minusFiveBtnEl.style.visibility === 'hidden' ||
-    hitBtnEl.style.visibility === 'visible' ||
-    standBtnEl.style.visibility === 'visible') {
-        return;
-    }
     renderButtons();    
 };
 
@@ -115,6 +107,14 @@ function handleMinusBet() {
 }
 
 function renderButtons() {
+    // Guard
+    if (confirmBtnEl.style.visibility === 'hidden' ||
+    plusFiveBtnEl.style.visibility === 'hidden' ||
+    minusFiveBtnEl.style.visibility === 'hidden' ||
+    hitBtnEl.style.visibility === 'visible' ||
+    standBtnEl.style.visibility === 'visible') {
+        return;
+    }
     confirmBtnEl.style.visibility = 'visible';
     plusFiveBtnEl.style.visibility = 'visible';
     minusFiveBtnEl.style.visibility = 'visible';
@@ -133,14 +133,24 @@ function handleConfirmBet() {
         dealerHand.push(shuffledDeck.pop()); 
     }
     while (playerHand.length < 2) {
-        playerHand.push(shuffledDeck.pop()); 
+        dealPlayerHand() 
     }
     render();
 }
 
 function handleHitBtn() {
-    playerHand.push(shuffledDeck.pop());
+    dealPlayerHand()
     render()
+}
+
+function dealPlayerHand() {
+    playerHand.push(shuffledDeck.pop()); 
+    let sum = 0;
+    for (let i = 0; i < playerHand.length; i++) {
+        const card = playerHand[i];
+        sum += card.value;
+    };
+    playerHandValue = sum;
 }
 
 function renderMoney() {
@@ -154,27 +164,20 @@ function renderDealerHand() {
         // Assign card face unless it's the not second card or showSecondCard is false
         const cardClass = (i !== 1 || showSecondCard) ? `${card.face}` : 'back';
         dealerHandEl[i].classList.add(cardClass);
-    }
+    };
 }
 
 function renderPlayerHand() {
     for (let i = 0; i < playerHand.length; i++) {
         const card = playerHand[i];
         playerHandEl[i].classList.add(`${card.face}`);
-    }
+    };
 };
 
 function renderPlayerHandValue() {
-    let sum = 0;
-    for (let i = 0; i < playerHand.length; i++) {
-        const card = playerHand[i];
-        sum += card.value;
-    }
-    playerHandValue = playerTotalEl.textContent = sum;
-
+    playerTotalEl.textContent = playerHandValue;
     if (playerHandValue >= 21 ||
         playerHand.length === 5) {
             hitBtnEl.style.visibility = 'hidden';
-            return;
-        }
+        };
 };
