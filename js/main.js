@@ -17,12 +17,12 @@ let showFirstCard; // boolean
 
 /*----- cached element references -----*/
 const dealerHandEl = document.querySelectorAll('#dealers-hand div');
-const dealerTotal11 = document.getElementById('dealer-card-value');
+const dealerTotalEl = document.getElementById('dealer-card-value');
 // const dealerTotal01 = document.getElementById('dealer-card-value-01');
 
 
 const playerHandEl = document.querySelectorAll('#players-hand div');
-const playerTotal11 = document.getElementById('player-card-value');
+const playerTotalEl = document.getElementById('player-card-value');
 // const playerTotal01 = document.getElementById('player-card-value-01');
 
 
@@ -57,10 +57,14 @@ function init() {
 };
 
 function render() {
-    renderDealerHand();
-    renderPlayerHand();
-    renderBank();
-    renderBet(); // not created
+    renderDealerHand(); //done & working
+
+    renderDealerHandValue(); // done & working - won't be visible until player hits stand - if stand has no been pressed, either show ? or unknown
+    
+    renderPlayerHand(); //done & working
+    renderPlayerHandValue(); // not created
+    // renderBank(); // not created
+    // renderBet(); // not created
     // Render bet
     
 };
@@ -94,10 +98,6 @@ function getNewShuffledDeck() {
     return newShuffledDeck;
 }
 
-function renderBank() {
-
-};
-
 function renderDealerHand() {
     const firstCardClass = showFirstCard ? `${dealerHand[0].face}` : 'back';
     dealerHandEl[0].classList.add(firstCardClass);
@@ -107,9 +107,28 @@ function renderDealerHand() {
         dealerHandEl[i].classList.add(`${card.face}`);
     }
 }
+
+function renderDealerHandValue() {
+    let sum = 0;
+    for (let i = 0; i < dealerHand.length; i++) {
+        const card = dealerHand[i];
+        sum += card.value;
+    }
+    dealerTotalEl.textContent = sum;
+};
+
 function renderPlayerHand() {
     for (let i = 0; i < playerHand.length; i++) {
         const card = playerHand[i];
         playerHandEl[i].classList.add(`${card.face}`);
     }
+};
+
+function renderPlayerHandValue() {
+    let sum = 0;
+    for (let i = 0; i < playerHand.length; i++) {
+        const card = playerHand[i];
+        sum += card.value;
+    }
+    playerTotalEl.textContent = sum;
 };
