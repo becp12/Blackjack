@@ -18,7 +18,7 @@ body {
 main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 20vmin 1fr 1fr;
+    grid-template-rows: 20vmin 0.75fr 7vmin 1fr;
     gap: 2vmin;
     width: 100%;
 }
@@ -36,12 +36,21 @@ h1 {
 #dealers-interface {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 20vmin 1fr;
+    grid-template-rows: 20vmin 5vmin;
     gap: 1vmin;
 }
 
 #dealers-hand-header {
     grid-column: span 3;
+}
+
+#button-row {
+    grid-column: span 3;
+}
+
+.play-buttons {
+    margin: 0 1vmin;
+    padding: 2vmin;
 }
 
 .hand-header {

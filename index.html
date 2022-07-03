@@ -12,7 +12,7 @@
 <body class="flex-ctr">
     <main>
         <h1>BLACKJACK</h1> <!--Span all columns-->
-        <div><!--SPACING SPAN--></div>
+        <div><!--SPACING DIV--></div>
         <section id="dealers-interface"> <!--Dealers hand, dealer's score, dealer hand heading-->
             <section class="current-hand" id="dealers-hand"><!--dealers hand-->
                 <div class="card" id="dealer-card-one">
@@ -38,7 +38,11 @@
             <span class="hand-header" id="dealers-hand-header" class="flex-ctr">DEALER'S HAND</span>
         </section>
 
-        <div><!--SPACING SPAN--></div>
+        <div><!--SPACING DIV--></div>
+        <div class="play-again new-hand flex-ctr" id="button-row">
+            <button class="play-buttons" id="play-again">Play Again</button>
+            <button class="play-buttons" id="next-hand">Next Hand</button>
+        </div>
 
             <!--3 columns / 3 rows-->
         <section id="money-info"><!--currentbet box, bank box, bet buttons-->
@@ -59,7 +63,7 @@
             <div id="bank">  
                 BANK
             </div>
-            <div><!--SPACING SPAN--></div>
+            <div><!--SPACING DIV--></div>
             <div id="bank-total">
                     $---.--
             </div>
