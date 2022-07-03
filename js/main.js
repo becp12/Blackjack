@@ -8,11 +8,12 @@ const masterDeck = buildMasterDeck();
 let betTotal; // number
 let availableCash; // number (will change depending on bet and win or lose)
 let playerHand; // array
-let playerCardValue; // number
+let playerHandValue; // number
 let dealerHand; // array
 let dealerCardValue; // number
 let shuffledDeck; // array
 let showSecondCard; // boolean (defaults to false because undefined is falsy)
+let gameStatus; // 'null if game in progress, W if player wins, L is player loses
 
 
 /*----- cached element references -----*/
@@ -34,7 +35,8 @@ const standBtnEl = document.getElementById('stand-btn');
 /*----- event listeners -----*/
 plusFiveBtnEl.addEventListener('click', handlePlusBet);
 minusFiveBtnEl.addEventListener('click', handleMinusBet);
-confirmBtnEl.addEventListener('click', handleConfirmBet)
+confirmBtnEl.addEventListener('click', handleConfirmBet);
+hitBtnEl.addEventListener('click', handleHitBtn);
 
 /*----- functions -----*/
 
@@ -44,12 +46,11 @@ function init() {
     betTotal = 0;
     availableCash = 200;
     playerHand = [];
-    playerCardValue = 0;
+    playerHandValue = 0;
     dealerHand = [];
-    dealerCardValue = 0;
+    dealerHandValue = 0;
     shuffledDeck = getNewShuffledDeck();
     betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-
 
     render();
 };
@@ -122,7 +123,6 @@ function renderButtons() {
 }
 
 function handleConfirmBet() {
-
     confirmBtnEl.style.visibility = 'hidden';
     plusFiveBtnEl.style.visibility = 'hidden';
     minusFiveBtnEl.style.visibility = 'hidden';
@@ -136,6 +136,11 @@ function handleConfirmBet() {
         playerHand.push(shuffledDeck.pop()); 
     }
     render();
+}
+
+function handleHitBtn() {
+    playerHand.push(shuffledDeck.pop());
+    render()
 }
 
 function renderMoney() {
@@ -165,5 +170,11 @@ function renderPlayerHandValue() {
         const card = playerHand[i];
         sum += card.value;
     }
-    playerTotalEl.textContent = sum;
+    playerHandValue = playerTotalEl.textContent = sum;
+
+    if (playerHandValue >= 21 ||
+        playerHand.length === 5) {
+            hitBtnEl.style.visibility = 'hidden';
+            return;
+        }
 };
