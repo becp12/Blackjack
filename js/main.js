@@ -18,6 +18,7 @@ let shuffledDeck; // array
 const dealerTotal11 = document.getElementById('dealer-card-value-11');
 const dealerTotal01 = document.getElementById('dealer-card-value-01');
 const dealerHandEl = document.querySelectorAll('#dealers-hand div');
+const playerHandEl = document.querySelectorAll('#players-hand div');
 
 
 /*----- event listeners -----*/
@@ -37,9 +38,12 @@ function init() {
     dealerCardValue = 0;
     shuffledDeck = getNewShuffledDeck();
 
-    //creating the dealerHand array
+    //creating the dealerHand array - will need to move to a confirm bet event handler function
     while (dealerHand.length < 2) {
         dealerHand.push(shuffledDeck.pop()); 
+    }
+    while (playerHand.length < 2) {
+        playerHand.push(shuffledDeck.pop()); 
     }
 
 
@@ -49,9 +53,10 @@ function init() {
 
 function render() {
     renderDealerHand(false);
+    renderPlayerHand();
     // Render Player Hand
     // Render Money
-
+    
 };
 
 function buildMasterDeck() {
@@ -96,3 +101,9 @@ function renderDealerHand(showFirstCard) {
         dealerHandEl[i].classList.add(`${card.face}`);
     }
 }
+function renderPlayerHand() {
+    for (let i = 0; i < playerHand.length; i++) {
+        const card = playerHand[i];
+        playerHandEl[i].classList.add(`${card.face}`);
+    }
+};
