@@ -19,10 +19,8 @@ let gameStatus; // 'null if game in progress, W if player wins, L is player lose
 /*----- cached element references -----*/
 const dealerHandEl = document.querySelectorAll('#dealers-hand div');
 const dealerTotalEl = document.getElementById('dealer-card-value');
-// const dealerTotal01 = document.getElementById('dealer-card-value-01');
 const playerHandEl = document.querySelectorAll('#players-hand div');
 const playerTotalEl = document.getElementById('player-card-value');
-// const playerTotal01 = document.getElementById('player-card-value-01');
 const bankTotalEl = document.getElementById("bank-total");
 const plusFiveBtnEl = document.getElementById('plusFive');
 const minusFiveBtnEl = document.getElementById('minusFive');
@@ -40,7 +38,7 @@ confirmBtnEl.addEventListener('click', handleConfirmBet);
 hitBtnEl.addEventListener('click', handleHitBtn);
 standBtnEl.addEventListener('click', handleStandBtn);
 
-/*----- functions -----*/
+/*----- init functions -----*/
 
 init();
 
@@ -52,10 +50,10 @@ function init() {
     dealerHand = [];
     dealerHandValue = 0;
     shuffledDeck = getNewShuffledDeck();
-    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-
     render();
 };
+
+/*----- render functions -----*/
 
 function render() {
     renderDealerHand();
@@ -66,6 +64,59 @@ function render() {
     renderButtons();    
 };
 
+function renderDealerHand() {
+    dealerHandEl[1].classList.remove('back');
+    for (let i = 0; i < dealerHand.length; i++) {
+        const card = dealerHand[i];
+        // Assign card face unless it's the not second card or showSecondCard is false
+        const cardClass = (i !== 1 || showSecondCard) ? `${card.face}` : 'back';
+        dealerHandEl[i].classList.add(cardClass);
+    };
+}
+
+function renderDealerHandValue() {
+    if (showSecondCard) {
+        dealerTotalEl.textContent = dealerHandValue;
+    }   
+}
+
+function renderPlayerHand() {
+    for (let i = 0; i < playerHand.length; i++) {
+        const card = playerHand[i];
+        playerHandEl[i].classList.add(`${card.face}`);
+    };
+};
+
+function renderPlayerHandValue() {
+    playerTotalEl.textContent = playerHandValue;
+    if (playerHandValue >= 21 ||
+        playerHand.length === 5) {
+            hitBtnEl.style.visibility = 'hidden';
+        };
+};
+
+function renderMoney() {
+    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
+    bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
+}
+
+function renderButtons() {
+    // Guard
+    if (confirmBtnEl.style.visibility === 'hidden' ||
+    plusFiveBtnEl.style.visibility === 'hidden' ||
+    minusFiveBtnEl.style.visibility === 'hidden' ||
+    parentHitStand.style.visibility === 'visible') {
+        return;
+    }
+    confirmBtnEl.style.visibility = 'visible';
+    plusFiveBtnEl.style.visibility = 'visible';
+    minusFiveBtnEl.style.visibility = 'visible';
+    parentHitStand.style.visibility = 'hidden';
+}
+
+/*----- base functions -----*/
+
+// WILL ONLY EVER CALL ONCE - AT THE BEGINNING OF LOADING THE PAGE - NOT EVEN A NEW ROUND/NEW HAND/RESTART GAME WILL CALL THIS
 function buildMasterDeck() {
     const deck = [];
     // Use nested forEach to generate card objects
@@ -95,6 +146,8 @@ function getNewShuffledDeck() {
     return newShuffledDeck;
 }
 
+/*----- handler functions -----*/
+
 function handlePlusBet() {
     if (betTotal === availableCash)
         return;
@@ -107,20 +160,6 @@ function handleMinusBet() {
         return;
     betTotal -= 5;
     render();
-}
-
-function renderButtons() {
-    // Guard
-    if (confirmBtnEl.style.visibility === 'hidden' ||
-    plusFiveBtnEl.style.visibility === 'hidden' ||
-    minusFiveBtnEl.style.visibility === 'hidden' ||
-    parentHitStand.style.visibility === 'visible') {
-        return;
-    }
-    confirmBtnEl.style.visibility = 'visible';
-    plusFiveBtnEl.style.visibility = 'visible';
-    minusFiveBtnEl.style.visibility = 'visible';
-    parentHitStand.style.visibility = 'hidden';
 }
 
 function handleConfirmBet() {
@@ -147,11 +186,12 @@ function handleStandBtn() {
     parentHitStand.style.visibility = 'hidden';
     showSecondCard = true;   
     while (dealerHand.length < 5 && dealerHandValue < 17) {
-        
-        dealDealerHand();
+            dealDealerHand();
     };
     render();
 }
+
+/*----- additional functions -----*/
 
 function dealPlayerHand() {
     playerHand.push(shuffledDeck.pop()); 
@@ -173,38 +213,10 @@ function dealDealerHand() {
     dealerHandValue = sum;
 }
 
-function renderMoney() {
-    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-    bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
-}
 
-function renderDealerHand() {
-    dealerHandEl[1].classList.remove('back');
-    for (let i = 0; i < dealerHand.length; i++) {
-        const card = dealerHand[i];
-        // Assign card face unless it's the not second card or showSecondCard is false
-        const cardClass = (i !== 1 || showSecondCard) ? `${card.face}` : 'back';
-        dealerHandEl[i].classList.add(cardClass);
-    };
-}
 
-function renderPlayerHand() {
-    for (let i = 0; i < playerHand.length; i++) {
-        const card = playerHand[i];
-        playerHandEl[i].classList.add(`${card.face}`);
-    };
-};
 
-function renderPlayerHandValue() {
-    playerTotalEl.textContent = playerHandValue;
-    if (playerHandValue >= 21 ||
-        playerHand.length === 5) {
-            hitBtnEl.style.visibility = 'hidden';
-        };
-};
 
-function renderDealerHandValue() {
-    if (showSecondCard) {
-        dealerTotalEl.textContent = dealerHandValue;
-    }   
-}
+
+
+
