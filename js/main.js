@@ -12,13 +12,18 @@ let playerCardValue; // number
 let dealerHand; // array
 let dealerCardValue; // number
 let shuffledDeck; // array
+let showFirstCard; // boolean
 
 
 /*----- cached element references -----*/
-const dealerTotal11 = document.getElementById('dealer-card-value-11');
-const dealerTotal01 = document.getElementById('dealer-card-value-01');
 const dealerHandEl = document.querySelectorAll('#dealers-hand div');
+const dealerTotal11 = document.getElementById('dealer-card-value');
+// const dealerTotal01 = document.getElementById('dealer-card-value-01');
+
+
 const playerHandEl = document.querySelectorAll('#players-hand div');
+const playerTotal11 = document.getElementById('player-card-value');
+// const playerTotal01 = document.getElementById('player-card-value-01');
 
 
 /*----- event listeners -----*/
@@ -52,10 +57,11 @@ function init() {
 };
 
 function render() {
-    renderDealerHand(false);
+    renderDealerHand();
     renderPlayerHand();
-    // Render Player Hand
-    // Render Money
+    renderBank();
+    renderBet(); // not created
+    // Render bet
     
 };
 
@@ -88,11 +94,11 @@ function getNewShuffledDeck() {
     return newShuffledDeck;
 }
 
-function renderMoney() {
+function renderBank() {
 
 };
 
-function renderDealerHand(showFirstCard) {
+function renderDealerHand() {
     const firstCardClass = showFirstCard ? `${dealerHand[0].face}` : 'back';
     dealerHandEl[0].classList.add(firstCardClass);
 
