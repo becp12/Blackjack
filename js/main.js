@@ -19,20 +19,22 @@ let showSecondCard; // boolean (defaults to false because undefined is falsy)
 const dealerHandEl = document.querySelectorAll('#dealers-hand div');
 const dealerTotalEl = document.getElementById('dealer-card-value');
 // const dealerTotal01 = document.getElementById('dealer-card-value-01');
-
 const playerHandEl = document.querySelectorAll('#players-hand div');
 const playerTotalEl = document.getElementById('player-card-value');
 // const playerTotal01 = document.getElementById('player-card-value-01');
 const bankTotalEl = document.getElementById("bank-total");
-const plusFiveEl = document.getElementById('plusFive')
-const minusFiveEl = document.getElementById('minusFive')
-const betTotalEl = document.getElementById('bet-total')
+const plusFiveBtnEl = document.getElementById('plusFive');
+const minusFiveBtnEl = document.getElementById('minusFive');
+const betTotalEl = document.getElementById('bet-total');
+const confirmBtnEl = document.getElementById('confirm');
+const hitBtnEl = document.getElementById('hit-btn');
+const standBtnEl = document.getElementById('stand-btn');
 
 
 /*----- event listeners -----*/
-plusFiveEl.addEventListener('click', handlePlusBet);
-minusFiveEl.addEventListener('click', handleMinusBet);
-
+plusFiveBtnEl.addEventListener('click', handlePlusBet);
+minusFiveBtnEl.addEventListener('click', handleMinusBet);
+confirmBtnEl.addEventListener('click', handleConfirmBet)
 
 /*----- functions -----*/
 
@@ -47,7 +49,6 @@ function init() {
     dealerCardValue = 0;
     shuffledDeck = getNewShuffledDeck();
     betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-
 
     //creating the dealerHand & plyaerHand array - will need to move to a confirm bet event handler function
     while (dealerHand.length < 2) {
@@ -65,11 +66,7 @@ function render() {
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
-
-
-    // FUNCTION TO BE MOVED TO ANOTHER SECTION DEPENDING ON HOW MY CODE ENDS UP BEING ORGANISED
-    renderDealerHandValue(); // done & working - won't be visible until player hits stand - if stand has no been pressed, either show ? or unknown
-    
+    renderButtons();    
 };
 
 function buildMasterDeck() {
@@ -105,14 +102,30 @@ function handlePlusBet() {
     if (betTotal === availableCash)
         return;
     betTotal += 5;
-    renderMoney();
+    render();
 }
 
 function handleMinusBet() {
     if (betTotal === 0) 
         return;
     betTotal -= 5;
-    renderMoney();
+    render();
+}
+
+function renderButtons() {
+    confirmBtnEl.style.visibility = 'visible';
+    plusFiveBtnEl.style.visibility = 'visible';
+    minusFiveBtnEl.style.visibility = 'visible';
+    hitBtnEl.style.visibility = 'hidden';
+    standBtnEl.style.visibility = 'hidden';
+}
+
+function handleConfirmBet() {
+   confirmBtnEl.style.visibility = 'hidden';
+   plusFiveBtnEl.style.visibility = 'hidden';
+   minusFiveBtnEl.style.visibility = 'hidden';
+   hitBtnEl.style.visibility = 'visible';
+   standBtnEl.style.visibility = 'visible';
 }
 
 function renderMoney() {
@@ -129,14 +142,7 @@ function renderDealerHand() {
     }
 }
 
-function renderDealerHandValue() {
-    let sum = 0;
-    for (let i = 0; i < dealerHand.length; i++) {
-        const card = dealerHand[i];
-        sum += card.value;
-    }
-    dealerTotalEl.textContent = sum;
-};
+
 
 function renderPlayerHand() {
     for (let i = 0; i < playerHand.length; i++) {
