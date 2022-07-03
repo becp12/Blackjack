@@ -50,13 +50,6 @@ function init() {
     shuffledDeck = getNewShuffledDeck();
     betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
 
-    //creating the dealerHand & plyaerHand array - will need to move to a confirm bet event handler function
-    while (dealerHand.length < 2) {
-        dealerHand.push(shuffledDeck.pop()); 
-    }
-    while (playerHand.length < 2) {
-        playerHand.push(shuffledDeck.pop()); 
-    }
 
     render();
 };
@@ -66,6 +59,14 @@ function render() {
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
+    // Guard
+    if (confirmBtnEl.style.visibility === 'hidden' ||
+    plusFiveBtnEl.style.visibility === 'hidden' ||
+    minusFiveBtnEl.style.visibility === 'hidden' ||
+    hitBtnEl.style.visibility === 'visible' ||
+    standBtnEl.style.visibility === 'visible') {
+        return;
+    }
     renderButtons();    
 };
 
@@ -121,11 +122,20 @@ function renderButtons() {
 }
 
 function handleConfirmBet() {
-   confirmBtnEl.style.visibility = 'hidden';
-   plusFiveBtnEl.style.visibility = 'hidden';
-   minusFiveBtnEl.style.visibility = 'hidden';
-   hitBtnEl.style.visibility = 'visible';
-   standBtnEl.style.visibility = 'visible';
+
+    confirmBtnEl.style.visibility = 'hidden';
+    plusFiveBtnEl.style.visibility = 'hidden';
+    minusFiveBtnEl.style.visibility = 'hidden';
+    hitBtnEl.style.visibility = 'visible';
+    standBtnEl.style.visibility = 'visible';
+
+    while (dealerHand.length < 2) {
+        dealerHand.push(shuffledDeck.pop()); 
+    }
+    while (playerHand.length < 2) {
+        playerHand.push(shuffledDeck.pop()); 
+    }
+    render();
 }
 
 function renderMoney() {
@@ -141,8 +151,6 @@ function renderDealerHand() {
         dealerHandEl[i].classList.add(cardClass);
     }
 }
-
-
 
 function renderPlayerHand() {
     for (let i = 0; i < playerHand.length; i++) {
