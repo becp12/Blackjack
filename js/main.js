@@ -25,11 +25,13 @@ const playerTotalEl = document.getElementById('player-card-value');
 // const playerTotal01 = document.getElementById('player-card-value-01');
 const bankTotalEl = document.getElementById("bank-total");
 const plusFiveEl = document.getElementById('plusFive')
+const minusFiveEl = document.getElementById('minusFive')
 const betTotalEl = document.getElementById('bet-total')
 
 
 /*----- event listeners -----*/
-plusFiveEl.addEventListener('click', renderBet);
+plusFiveEl.addEventListener('click', handlePlusBet);
+minusFiveEl.addEventListener('click', handleMinusBet);
 
 
 /*----- functions -----*/
@@ -55,8 +57,6 @@ function init() {
         playerHand.push(shuffledDeck.pop()); 
     }
 
-
-
     render();
 };
 
@@ -64,17 +64,11 @@ function render() {
     renderDealerHand();
     renderPlayerHand();
     renderPlayerHandValue();
-    // renderBet();
-    renderBank();
+    renderMoney();
 
 
     // FUNCTION TO BE MOVED TO ANOTHER SECTION DEPENDING ON HOW MY CODE ENDS UP BEING ORGANISED
     renderDealerHandValue(); // done & working - won't be visible until player hits stand - if stand has no been pressed, either show ? or unknown
-
-
-
-     // not created
-    // Render bet
     
 };
 
@@ -107,13 +101,22 @@ function getNewShuffledDeck() {
     return newShuffledDeck;
 }
 
-function renderBet() {
-    betTotalEl.textContent = `$${(betTotal + 5).toFixed(2)}`;
+function handlePlusBet() {
+    if (betTotal === availableCash)
+        return;
     betTotal += 5;
-    renderBank();
+    renderMoney();
 }
 
-function renderBank() {
+function handleMinusBet() {
+    if (betTotal === 0) 
+        return;
+    betTotal -= 5;
+    renderMoney();
+}
+
+function renderMoney() {
+    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
     bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
 }
 
