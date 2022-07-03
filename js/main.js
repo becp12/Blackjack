@@ -24,10 +24,12 @@ const playerHandEl = document.querySelectorAll('#players-hand div');
 const playerTotalEl = document.getElementById('player-card-value');
 // const playerTotal01 = document.getElementById('player-card-value-01');
 const bankTotalEl = document.getElementById("bank-total");
+const plusFiveEl = document.getElementById('plusFive')
+const betTotalEl = document.getElementById('bet-total')
 
 
 /*----- event listeners -----*/
-
+plusFiveEl.addEventListener('click', renderBet);
 
 
 /*----- functions -----*/
@@ -42,6 +44,7 @@ function init() {
     dealerHand = [];
     dealerCardValue = 0;
     shuffledDeck = getNewShuffledDeck();
+    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
 
 
     //creating the dealerHand & plyaerHand array - will need to move to a confirm bet event handler function
@@ -61,14 +64,16 @@ function render() {
     renderDealerHand();
     renderPlayerHand();
     renderPlayerHandValue();
+    // renderBet();
     renderBank();
+
 
     // FUNCTION TO BE MOVED TO ANOTHER SECTION DEPENDING ON HOW MY CODE ENDS UP BEING ORGANISED
     renderDealerHandValue(); // done & working - won't be visible until player hits stand - if stand has no been pressed, either show ? or unknown
 
 
 
-    // renderBet(); // not created
+     // not created
     // Render bet
     
 };
@@ -100,6 +105,12 @@ function getNewShuffledDeck() {
         newShuffledDeck.push(tempDeck.splice(rndIdx, 1)[0]);
     }
     return newShuffledDeck;
+}
+
+function renderBet() {
+    betTotalEl.textContent = `$${(betTotal + 5).toFixed(2)}`;
+    betTotal += 5;
+    renderBank();
 }
 
 function renderBank() {
