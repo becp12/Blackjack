@@ -12,7 +12,7 @@ let playerCardValue; // number
 let dealerHand; // array
 let dealerCardValue; // number
 let shuffledDeck; // array
-let showFirstCard; // boolean
+let showSecondCard; // boolean (defaults to false because undefined is falsy)
 
 
 /*----- cached element references -----*/
@@ -59,10 +59,11 @@ function init() {
 function render() {
     renderDealerHand(); //done & working
 
+    // FUNCTION TO BE MOVED TO ANOTHER SECTION DEPENDING ON HOW MY CODE ENDS UP BEING ORGANISED
     renderDealerHandValue(); // done & working - won't be visible until player hits stand - if stand has no been pressed, either show ? or unknown
-    
+
     renderPlayerHand(); //done & working
-    renderPlayerHandValue(); // not created
+    renderPlayerHandValue(); //done & working
     // renderBank(); // not created
     // renderBet(); // not created
     // Render bet
@@ -99,12 +100,11 @@ function getNewShuffledDeck() {
 }
 
 function renderDealerHand() {
-    const firstCardClass = showFirstCard ? `${dealerHand[0].face}` : 'back';
-    dealerHandEl[0].classList.add(firstCardClass);
-
-    for (let i = 1; i < dealerHand.length; i++) {
+    for (let i = 0; i < dealerHand.length; i++) {
         const card = dealerHand[i];
-        dealerHandEl[i].classList.add(`${card.face}`);
+        // Assign card face unless it's the not second card or showSecondCard is false
+        const cardClass = (i !== 1 || showSecondCard) ? `${card.face}` : 'back';
+        dealerHandEl[i].classList.add(cardClass);
     }
 }
 
