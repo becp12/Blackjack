@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLACKJACK</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/card-deck-css/css/cardstarter.css">
     <script defer src="/js/main.js"></script>
 </head>
 <body class="flex-ctr">
@@ -14,23 +15,26 @@
         <div><!--SPACING SPAN--></div>
         <section id="dealers-interface"> <!--Dealers hand, dealer's score, dealer hand heading-->
             <section class="current-hand" id="dealers-hand"><!--dealers hand-->
-                <div id="dealer-card-one">
+                <div class="card" id="dealer-card-one">
                     CARD ONE
                 </div>
-                <div id="dealer-card-two">
+                <div class="card" id="dealer-card-two">
                     CARD TWO
                 </div>
-                <div id="dealer-card-three">
+                <div class="card" id="dealer-card-three">
                     CARD THREE
                 </div>
-                <div id="dealer-card-four">
+                <div class="card" id="dealer-card-four">
                     CARD FOUR
                 </div>
-                <div id="dealer-card-five">
+                <div class="card" id="dealer-card-five">
                     CARD FIVE
                 </div>
             </section>
-            <span>Count:<br>__ (A = 11)<br>__ (A = 1)</span>
+            <span>Count:<br>
+                <span id="dealer-card-value-11">___</span>(A = 11)<br>
+                <span id="dealer-card-value-01">___</span> (A = 1)
+            </span>
             <span class="hand-header" id="dealers-hand-header" class="flex-ctr">DEALER'S HAND</span>
         </section>
 
@@ -65,23 +69,26 @@
             <!--3 rows / 2 columns-->
             <span class="hand-header" id="players-hand-header">PLAYER'S HAND</span><!--span 2 columns-->
             <section class="current-hand" id="players-hand">
-                <div id="player-card-one">
+                <div class="card" id="player-card-one">
                     CARD ONE
                 </div>
-                <div id="player-card-two">
+                <div class="card" id="player-card-two">
                     CARD TWO
                 </div>
-                <div id="player-card-three">
+                <div class="card" id="player-card-three">
                     CARD THREE
                 </div>
-                <div id="player-card-four">
+                <div class="card" id="player-card-four">
                     CARD FOUR
                 </div>
-                <div id="player-card-five">
+                <div class="card" id="player-card-five">
                     CARD FIVE
                 </div>
             </section>
-            <span>Count:<br>__ (A = 11)<br>__ (A = 1)</span>
+            <span>Count:<br>
+                <span id="player-card-value-11">___</span>(A = 11)<br>
+                <span id="player-card-value-01">___</span> (A = 1)
+            </span>
             <div id="chips"><!--span 2 columns-->
                 CHIPS CHIPS CHIPS
             </div>
