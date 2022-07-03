@@ -10,7 +10,7 @@ let availableCash; // number (will change depending on bet and win or lose)
 let playerHand; // array
 let playerHandValue; // number
 let dealerHand; // array
-let dealerCardValue; // number
+let dealerHandValue; // number
 let shuffledDeck; // array
 let showSecondCard; // boolean (defaults to false because undefined is falsy)
 let gameStatus; // 'null if game in progress, W if player wins, L is player loses
@@ -30,6 +30,7 @@ const betTotalEl = document.getElementById('bet-total');
 const confirmBtnEl = document.getElementById('confirm');
 const hitBtnEl = document.getElementById('hit-btn');
 const standBtnEl = document.getElementById('stand-btn');
+const parentHitStand = document.getElementById('hit-stand')
 
 
 /*----- event listeners -----*/
@@ -37,6 +38,7 @@ plusFiveBtnEl.addEventListener('click', handlePlusBet);
 minusFiveBtnEl.addEventListener('click', handleMinusBet);
 confirmBtnEl.addEventListener('click', handleConfirmBet);
 hitBtnEl.addEventListener('click', handleHitBtn);
+standBtnEl.addEventListener('click', handleStandBtn);
 
 /*----- functions -----*/
 
@@ -57,6 +59,7 @@ function init() {
 
 function render() {
     renderDealerHand();
+    renderDealerHandValue();
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
@@ -111,26 +114,23 @@ function renderButtons() {
     if (confirmBtnEl.style.visibility === 'hidden' ||
     plusFiveBtnEl.style.visibility === 'hidden' ||
     minusFiveBtnEl.style.visibility === 'hidden' ||
-    hitBtnEl.style.visibility === 'visible' ||
-    standBtnEl.style.visibility === 'visible') {
+    parentHitStand.style.visibility === 'visible') {
         return;
     }
     confirmBtnEl.style.visibility = 'visible';
     plusFiveBtnEl.style.visibility = 'visible';
     minusFiveBtnEl.style.visibility = 'visible';
-    hitBtnEl.style.visibility = 'hidden';
-    standBtnEl.style.visibility = 'hidden';
+    parentHitStand.style.visibility = 'hidden';
 }
 
 function handleConfirmBet() {
     confirmBtnEl.style.visibility = 'hidden';
     plusFiveBtnEl.style.visibility = 'hidden';
     minusFiveBtnEl.style.visibility = 'hidden';
-    hitBtnEl.style.visibility = 'visible';
-    standBtnEl.style.visibility = 'visible';
+    parentHitStand.style.visibility = 'visible';
 
     while (dealerHand.length < 2) {
-        dealerHand.push(shuffledDeck.pop()); 
+        dealDealerHand();
     }
     while (playerHand.length < 2) {
         dealPlayerHand() 
@@ -143,6 +143,16 @@ function handleHitBtn() {
     render()
 }
 
+function handleStandBtn() {
+    parentHitStand.style.visibility = 'hidden';
+    showSecondCard = true;   
+    while (dealerHand.length < 5 && dealerHandValue < 17) {
+        
+        dealDealerHand();
+    };
+    render();
+}
+
 function dealPlayerHand() {
     playerHand.push(shuffledDeck.pop()); 
     let sum = 0;
@@ -153,12 +163,23 @@ function dealPlayerHand() {
     playerHandValue = sum;
 }
 
+function dealDealerHand() {
+    dealerHand.push(shuffledDeck.pop());
+    let sum = 0;
+    for (let i = 0; i < dealerHand.length; i++) {
+        const card = dealerHand[i];
+        sum += card.value;
+    }
+    dealerHandValue = sum;
+}
+
 function renderMoney() {
     betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
     bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
 }
 
 function renderDealerHand() {
+    dealerHandEl[1].classList.remove('back');
     for (let i = 0; i < dealerHand.length; i++) {
         const card = dealerHand[i];
         // Assign card face unless it's the not second card or showSecondCard is false
@@ -181,3 +202,9 @@ function renderPlayerHandValue() {
             hitBtnEl.style.visibility = 'hidden';
         };
 };
+
+function renderDealerHandValue() {
+    if (showSecondCard) {
+        dealerTotalEl.textContent = dealerHandValue;
+    }   
+}
