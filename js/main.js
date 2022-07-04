@@ -28,7 +28,11 @@ const betTotalEl = document.getElementById('bet-total');
 const confirmBtnEl = document.getElementById('confirm');
 const hitBtnEl = document.getElementById('hit-btn');
 const standBtnEl = document.getElementById('stand-btn');
-const parentHitStand = document.getElementById('hit-stand')
+const parentHitStandEl = document.getElementById('hit-stand')
+const winnerPlayAgainEl = document.getElementById('button-row');
+const newGameBtnEl = document.getElementById('new-game');
+const newHandBtnEl = document.getElementById('next-hand');
+const winnerMessageEl = document.getElementById('winner-message');
 
 
 /*----- event listeners -----*/
@@ -50,6 +54,7 @@ function init() {
     dealerHand = [];
     dealerHandValue = 0;
     shuffledDeck = getNewShuffledDeck();
+    gameStatus = null;
     render();
 };
 
@@ -61,7 +66,8 @@ function render() {
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
-    renderButtons();    
+    renderButtons();   
+    renderWinner(); 
 };
 
 function renderDealerHand() {
@@ -91,7 +97,7 @@ function renderPlayerHandValue() {
     playerTotalEl.textContent = playerHandValue;
     if (playerHandValue >= 21 ||
         playerHand.length === 5) {
-            hitBtnEl.style.visibility = 'hidden';
+            parentHitStandEl.style.visibility = 'hidden';
         };
 };
 
@@ -105,13 +111,32 @@ function renderButtons() {
     if (confirmBtnEl.style.visibility === 'hidden' ||
     plusFiveBtnEl.style.visibility === 'hidden' ||
     minusFiveBtnEl.style.visibility === 'hidden' ||
-    parentHitStand.style.visibility === 'visible') {
+    parentHitStandEl.style.visibility === 'visible') {
         return;
     }
     confirmBtnEl.style.visibility = 'visible';
     plusFiveBtnEl.style.visibility = 'visible';
     minusFiveBtnEl.style.visibility = 'visible';
-    parentHitStand.style.visibility = 'hidden';
+    parentHitStandEl.style.visibility = 'hidden';
+
+    if (gameStatus === null) {
+        winnerPlayAgainEl.style.visibility = 'none';
+    } else {
+        winnerPlayAgainEl.style.visibility = 'visible';
+    }
+   
+}
+
+function renderWinner() {
+    if (gameStatus === null) {
+        return;
+    } else if (gameStatus === 'W') {
+        winnerMessageEl.textContent = 'Player Wins!';
+    } else if (gameStatus === 'L') {
+        winnerMessageEl.textContent = 'Player Loses!';
+    } else {
+        winnerMessageEl.textContent = 'Dealer Wins!';
+    }
 }
 
 /*----- base functions -----*/
@@ -162,11 +187,11 @@ function handleMinusBet() {
     render();
 }
 
-function handleConfirmBet() {
-    confirmBtnEl.style.visibility = 'hidden';
+function handleConfirmBet(event) {
+    event.target.style.visibility = 'hidden';
     plusFiveBtnEl.style.visibility = 'hidden';
     minusFiveBtnEl.style.visibility = 'hidden';
-    parentHitStand.style.visibility = 'visible';
+    parentHitStandEl.style.visibility = 'visible';
 
     while (dealerHand.length < 2) {
         dealDealerHand();
@@ -183,7 +208,7 @@ function handleHitBtn() {
 }
 
 function handleStandBtn() {
-    parentHitStand.style.visibility = 'hidden';
+    parentHitStandEl.style.visibility = 'hidden';
     showSecondCard = true;   
     while (dealerHand.length < 5 && dealerHandValue < 17) {
             dealDealerHand();
@@ -213,10 +238,8 @@ function dealDealerHand() {
     dealerHandValue = sum;
 }
 
-
-
-
-
-
-
-
+// function determineWinner() {
+//     if {playerHandValue === 21} {
+//         gameStatus = 'W';
+//     }
+// };
