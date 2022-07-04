@@ -67,7 +67,7 @@ function render() {
     renderPlayerHandValue();
     renderMoney();
     renderButtons();   
-    renderWinner(); 
+    renderWinner();
 };
 
 function renderDealerHand() {
@@ -102,8 +102,13 @@ function renderPlayerHandValue() {
 };
 
 function renderMoney() {
-    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-    bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
+    if (gameStatus === null) {
+        betTotalEl.textContent = `$${betTotal/*.toFixed(2)*/}`;
+        bankTotalEl.textContent = `$${(availableCash - betTotal)/*.toFixed(2)*/}`;
+    } else {
+        bankTotalEl.textContent = `$${(availableCash)/*.toFixed(2)*/}`;
+        betTotalEl.textContent = `$${betTotal}`;
+    }
 }
 
 function renderButtons() {
@@ -128,13 +133,13 @@ function renderButtons() {
 function renderWinner() {
     if (gameStatus === null) {
         return;
-    } else if (gameStatus === 'W') {
+    } else if (gameStatus === 'PlayerHigher' || gameStatus === 'DealerBust' || gameStatus === 'Player21') {
         winnerMessageEl.textContent = 'Player Wins!';
-    } else if (gameStatus === 'L') {
+    } else if (gameStatus === 'PlayerBust') {
         winnerMessageEl.textContent = 'Player Loses!';
-    } else if (gameStatus === 'T') {
+    } else if (gameStatus === 'Tie') {
         winnerMessageEl.textContent = 'You Tied!'
-    } else if (gameStatus === 'D') {
+    } else if (gameStatus === 'DealerHigher' || gameStatus === 'Dealer21') {
         winnerMessageEl.textContent = 'Dealer Wins!';
     }
 }
@@ -200,9 +205,13 @@ function handleConfirmBet(event) {
         dealPlayerHand() 
     }
     if (playerHandValue === 21) {
-        gameStatus = 'W';
+        gameStatus = 'Player21';
+        availableCash += (betTotal + (betTotal * 1.5));
+        betTotal = 0;
     } else if (playerHandValue > 21) {
-        gameStatus = 'L';
+        gameStatus = 'PlayerBust';
+        availableCash -= betTotal;
+        betTotal = 0;
     } else {
         gameStatus = null;
     };
@@ -212,9 +221,13 @@ function handleConfirmBet(event) {
 function handleHitBtn() {
     dealPlayerHand()
     if (playerHandValue === 21) {
-        gameStatus = 'W';
+        gameStatus = 'Player21';
+        availableCash += (betTotal + (betTotal * 1.5));
+        betTotal = 0;
     } else if (playerHandValue > 21) {
-        gameStatus = 'L';
+        gameStatus = 'PlayerBust';
+        availableCash -= betTotal;
+        betTotal = 0;
     } else {
         gameStatus = null;
     };
@@ -256,18 +269,38 @@ function dealDealerHand() {
 function determineWinner() {
     if (showSecondCard === false) return;
     if (playerHandValue > dealerHandValue && playerHandValue <= 21) {
-        gameSatus = 'W';
+        gameStatus = 'PlayerHigher';
     } else if (dealerHandValue > 21 && playerHandValue < 21) {
-        gameStatus = 'W';
-    } else if (playerHandValue > 21) {
-        gameStatus = 'L';
+        gameStatus = 'DealerBust';
     } else if (dealerHandValue > playerHandValue && dealerHandValue < 21) {
-        gameStatus = 'L';
+        gameStatus = 'DealerHigher';
     } else if (dealerHandValue === 21 && playerHandValue !== 21) {
-        gameStatus = 'D'
+        gameStatus = 'Dealer21'
     } else if (playerHandValue === dealerHandValue) {
-        gameStatus = 'T';
+        gameStatus = 'Tie';
     } else {
-        gameStatus = null;
+        availableCash -= betTotal;
+    }
+    calculateWinnings();
+};
+
+function calculateWinnings() {
+    if (showSecondCard === false ||
+        gameStatus === null) return;
+    if (gameStatus === 'PlayerHigher') {
+        availableCash += (betTotal * 2);
+        betTotal = 0;
+    } else if (gameStatus === 'DealerBust') {
+        availableCash += (betTotal * 2);
+        betTotal = 0;
+    } else if (gameStatus === 'DealerHigher') {
+        availableCash -= betTotal;
+        betTotal = 0;
+    } else if (gameStatus === 'Dealer21') {
+        availableCash -= betTotal;
+        betTotal = 0;
+    } else if (gameStatus === 'Tie') {
+        availableCash += (betTotal);
+        betTotal = 0;
     }
 };
