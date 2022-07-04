@@ -29,10 +29,10 @@ const confirmBtnEl = document.getElementById('confirm');
 const hitBtnEl = document.getElementById('hit-btn');
 const standBtnEl = document.getElementById('stand-btn');
 const parentHitStandEl = document.getElementById('hit-stand')
-const winnerPlayAgainEl = document.getElementById('button-row');
 const newGameBtnEl = document.getElementById('new-game');
 const newHandBtnEl = document.getElementById('next-hand');
 const winnerMessageEl = document.getElementById('winner-message');
+const buttonRowEl = document.getElementById('button-row')
 
 
 /*----- event listeners -----*/
@@ -107,6 +107,11 @@ function renderMoney() {
 }
 
 function renderButtons() {
+    if (gameStatus === null) {
+        buttonRowEl.style.visibility = 'hidden';
+    } else {
+        buttonRowEl.style.visibility = 'visible';
+    }
     // Guard
     if (confirmBtnEl.style.visibility === 'hidden' ||
     plusFiveBtnEl.style.visibility === 'hidden' ||
@@ -118,13 +123,6 @@ function renderButtons() {
     plusFiveBtnEl.style.visibility = 'visible';
     minusFiveBtnEl.style.visibility = 'visible';
     parentHitStandEl.style.visibility = 'hidden';
-
-    if (gameStatus === null) {
-        winnerPlayAgainEl.style.visibility = 'none';
-    } else {
-        winnerPlayAgainEl.style.visibility = 'visible';
-    }
-   
 }
 
 function renderWinner() {
@@ -134,7 +132,9 @@ function renderWinner() {
         winnerMessageEl.textContent = 'Player Wins!';
     } else if (gameStatus === 'L') {
         winnerMessageEl.textContent = 'Player Loses!';
-    } else {
+    } else if (gameStatus === 'T') {
+        winnerMessageEl.textContent = 'You Tied!'
+    } else if (gameStatus === 'D') {
         winnerMessageEl.textContent = 'Dealer Wins!';
     }
 }
@@ -199,12 +199,26 @@ function handleConfirmBet(event) {
     while (playerHand.length < 2) {
         dealPlayerHand() 
     }
+    if (playerHandValue === 21) {
+        gameStatus = 'W';
+    } else if (playerHandValue > 21) {
+        gameStatus = 'L';
+    } else {
+        gameStatus = null;
+    };
     render();
 }
 
 function handleHitBtn() {
     dealPlayerHand()
-    render()
+    if (playerHandValue === 21) {
+        gameStatus = 'W';
+    } else if (playerHandValue > 21) {
+        gameStatus = 'L';
+    } else {
+        gameStatus = null;
+    };
+    render();
 }
 
 function handleStandBtn() {
@@ -213,6 +227,7 @@ function handleStandBtn() {
     while (dealerHand.length < 5 && dealerHandValue < 17) {
             dealDealerHand();
     };
+    determineWinner();
     render();
 }
 
@@ -238,8 +253,21 @@ function dealDealerHand() {
     dealerHandValue = sum;
 }
 
-// function determineWinner() {
-//     if {playerHandValue === 21} {
-//         gameStatus = 'W';
-//     }
-// };
+function determineWinner() {
+    if (showSecondCard === false) return;
+    if (playerHandValue > dealerHandValue && playerHandValue <= 21) {
+        gameSatus = 'W';
+    } else if (dealerHandValue > 21 && playerHandValue < 21) {
+        gameStatus = 'W';
+    } else if (playerHandValue > 21) {
+        gameStatus = 'L';
+    } else if (dealerHandValue > playerHandValue && dealerHandValue < 21) {
+        gameStatus = 'L';
+    } else if (dealerHandValue === 21 && playerHandValue !== 21) {
+        gameStatus = 'D'
+    } else if (playerHandValue === dealerHandValue) {
+        gameStatus = 'T';
+    } else {
+        gameStatus = null;
+    }
+};
