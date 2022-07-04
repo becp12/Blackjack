@@ -39,36 +39,37 @@
         </section>
 
         <div><!--SPACING DIV--></div>
-        <div class="play-again new-hand flex-ctr" id="button-row">
-            <button class="play-buttons" id="play-again">Play Again</button>
-            <button class="play-buttons" id="next-hand">Next Hand</button>
+        <div id="button-row">
+            <div id="winner-message"></div>
+            <div class="play-again new-hand flex-ctr">
+                <button class="play-buttons" id="new-game">New Game</button>
+                <button class="play-buttons" id="next-hand">Next Hand</button>
+            </div>
         </div>
 
             <!--3 columns / 3 rows-->
         <section id="money-info"><!--currentbet box, bank box, bet buttons-->
             <!--4 rows / 2 columns-->
             <!--need empty block in cell 4-->
-            <div id="current-bet">
-                CURRENT BET
-            </div>
             <div id="bet-buttons">
                 <button id="confirm">CONFIRM BET</button>
                 <button id="plusFive">+ $5</button>
                 <button id="minusFive">- $5</button>
             </div>
+            <div id="current-bet">
+                CURRENT BET
+            </div>
             <div id="bet-total">
                     $--.--
-            </div>
-            
+            </div>         
             <div id="bank">  
                 BANK
             </div>
-            <div><!--SPACING DIV--></div>
             <div id="bank-total">
                     $---.--
             </div>
         </section>
-
+        <div><!--SPACING DIV--></div>
         <section id="players-hand-column"><!--players hand, player hand heading,-->
             <!--3 rows / 2 columns-->
             <span class="hand-header" id="players-hand-header">PLAYER'S HAND</span><!--span 2 columns-->
