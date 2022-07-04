@@ -103,11 +103,11 @@ function renderPlayerHandValue() {
 
 function renderMoney() {
     if (gameStatus === null) {
-        betTotalEl.textContent = `$${betTotal/*.toFixed(2)*/}`;
-        bankTotalEl.textContent = `$${(availableCash - betTotal)/*.toFixed(2)*/}`;
+        betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
+        bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
     } else {
-        bankTotalEl.textContent = `$${(availableCash)/*.toFixed(2)*/}`;
-        betTotalEl.textContent = `$${betTotal}`;
+        bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
+        betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
     }
 }
 
