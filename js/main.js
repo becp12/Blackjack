@@ -125,10 +125,10 @@ function renderMoney() {
     if (gameStatus === null) {
         betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
         bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
-    } else {
+    } /*else {
         betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
         bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
-    }
+    }*/
 }
 
 function renderButtons() {
@@ -146,6 +146,10 @@ function renderButtons() {
         return;
     }
 
+    if (playerHand.length === 5) {
+        setVisible(hitBtnEl, false);
+    }
+
     if (isVisible(betButtonsEl)) {
         setVisible(parentHitStandEl, false);
     } else {
@@ -156,8 +160,10 @@ function renderButtons() {
 function renderWinner() {
     if (gameStatus === null) {
         return;
-    } else if (gameStatus === 'PlayerHigher' || gameStatus === 'DealerBust' || gameStatus === 'Player21') {
+    } else if (gameStatus === 'PlayerHigher' || gameStatus === 'DealerBust') {
         winnerMessageEl.textContent = 'Player Wins!';
+    } else if (gameStatus === 'playerBlackjack') {
+        winnerMessageEl.textContent = 'Blackjack!';
     } else if (gameStatus === 'PlayerBust') {
         winnerMessageEl.textContent = 'Player Bust!';
     } else if (gameStatus === 'Tie') {
@@ -225,7 +231,7 @@ function handleConfirmBet(event) {
         dealPlayerHand() 
     }
     if (playerHandValue === 21) {
-        gameStatus = 'Player21';
+        gameStatus = 'playerBlackjack';
         availableCash += (betTotal + (betTotal * 1.5));
         betTotal = 0;
     } else if (playerHandValue > 21) {
@@ -245,7 +251,7 @@ function handleConfirmBet(event) {
 function handleHitBtn() {
     dealPlayerHand()
     if (playerHandValue === 21) {
-        gameStatus = 'Player21';
+        gameStatus = 'playerBlackjack';
         availableCash += (betTotal + (betTotal * 1.5));
         betTotal = 0;
     } else if (playerHandValue > 21) {
