@@ -32,7 +32,8 @@ const parentHitStandEl = document.getElementById('hit-stand')
 const newGameBtnEl = document.getElementById('new-game');
 const newHandBtnEl = document.getElementById('next-hand');
 const winnerMessageEl = document.getElementById('winner-message');
-const buttonRowEl = document.getElementById('button-row')
+const buttonRowEl = document.getElementById('button-row');
+const betButtonsEl = document.getElementById('bet-buttons');
 
 
 /*----- event listeners -----*/
@@ -118,16 +119,16 @@ function renderButtons() {
         buttonRowEl.style.visibility = 'visible';
     }
     // Guard
-    if (confirmBtnEl.style.visibility === 'hidden' ||
-    plusFiveBtnEl.style.visibility === 'hidden' ||
-    minusFiveBtnEl.style.visibility === 'hidden' ||
-    parentHitStandEl.style.visibility === 'visible') {
+    if (parentHitStandEl.style.visibility === 'visible' ||
+        betButtonsEl.style.visibility === 'hidden') {
         return;
     }
-    confirmBtnEl.style.visibility = 'visible';
-    plusFiveBtnEl.style.visibility = 'visible';
-    minusFiveBtnEl.style.visibility = 'visible';
+    betButtonsEl.style.visibility = 'visible';
+    confirmBtnEl.style.visibility = 'hidden';
     parentHitStandEl.style.visibility = 'hidden';
+    if (betTotal > 0) {
+        confirmBtnEl.style.visibility = 'visible';
+    }
 }
 
 function renderWinner() {
@@ -248,21 +249,43 @@ function handleStandBtn() {
 
 function dealPlayerHand() {
     playerHand.push(shuffledDeck.pop()); 
+
     let sum = 0;
+    let aceCount = 0;    
     for (let i = 0; i < playerHand.length; i++) {
         const card = playerHand[i];
+        if (card.value === 11) {
+            aceCount++;
+        }
         sum += card.value;
     };
+
+    while (sum > 21 && aceCount > 0) {
+        sum -= 10;
+        aceCount--;
+    }
+
     playerHandValue = sum;
 }
 
 function dealDealerHand() {
     dealerHand.push(shuffledDeck.pop());
+
     let sum = 0;
+    let aceCount = 0;
     for (let i = 0; i < dealerHand.length; i++) {
         const card = dealerHand[i];
+        if (card.value === 11) {
+            aceCount++;
+        }
         sum += card.value;
+    };
+    
+    while (sum > 21 && aceCount > 0) {
+        sum -= 10;
+        aceCount--;
     }
+
     dealerHandValue = sum;
 }
 
