@@ -132,13 +132,19 @@ function renderMoney() {
 function renderButtons() {
     if (gameStatus === null) {
         setVisible(buttonRowEl, false);
+        if (!playerHand.length) {
+            setVisible(betButtonsEl, true);
+            setVisible(confirmBtnEl, betTotal > 0);
+        }
     } else {
-        setVisible(buttonRowEl, true);
+            setVisible(buttonRowEl, true);
+            setVisible(betButtonsEl, false);
+            setVisible(confirmBtnEl, false);
+            setVisible(parentHitStandEl, false);
     }
 
     if (isVisible(betButtonsEl)) {
         setVisible(parentHitStandEl, false);
-        setVisible(confirmBtnEl, betTotal > 0);
     } else {
         setVisible(parentHitStandEl, true);
     }
@@ -207,10 +213,6 @@ function handleMinusBet() {
 }
 
 function handleConfirmBet(event) {
-    setVisible(event.target, false);
-    setVisible(betButtonsEl, false);
-    setVisible(parentHitStandEl, true);
-
     while (dealerHand.length < 2) {
         dealDealerHand();
     }
@@ -229,6 +231,10 @@ function handleConfirmBet(event) {
         gameStatus = null;
     };
     render();
+
+    setVisible(event.target, false);
+    setVisible(betButtonsEl, false);
+    setVisible(parentHitStandEl, true);
 }
 
 function handleHitBtn() {
