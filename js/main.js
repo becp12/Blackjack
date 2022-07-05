@@ -2,6 +2,8 @@
 const suits = ['s', 'c', 'd', 'h'];
 const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', 'K', 'A'];
 const masterDeck = buildMasterDeck();
+const isVisible = (element) => element.style.visibility !== 'hidden';
+const setVisible = (element, visible) => element.style.visibility = (visible ? 'visible' : 'hidden');
 
 /*----- app's state (variables) -----*/
 
@@ -56,6 +58,7 @@ function init() {
     dealerHandValue = 0;
     shuffledDeck = getNewShuffledDeck();
     gameStatus = null;
+
     render();
 };
 
@@ -98,7 +101,7 @@ function renderPlayerHandValue() {
     playerTotalEl.textContent = playerHandValue;
     if (playerHandValue >= 21 ||
         playerHand.length === 5) {
-            parentHitStandEl.style.visibility = 'hidden';
+            setVisible(parentHitStandEl, false);
         };
 };
 
@@ -114,20 +117,16 @@ function renderMoney() {
 
 function renderButtons() {
     if (gameStatus === null) {
-        buttonRowEl.style.visibility = 'hidden';
+        setVisible(buttonRowEl, false);
     } else {
-        buttonRowEl.style.visibility = 'visible';
+        setVisible(buttonRowEl, true);
     }
-    // Guard
-    if (parentHitStandEl.style.visibility === 'visible' ||
-        betButtonsEl.style.visibility === 'hidden') {
-        return;
-    }
-    betButtonsEl.style.visibility = 'visible';
-    confirmBtnEl.style.visibility = 'hidden';
-    parentHitStandEl.style.visibility = 'hidden';
-    if (betTotal > 0) {
-        confirmBtnEl.style.visibility = 'visible';
+
+    if (isVisible(betButtonsEl)) {
+        setVisible(parentHitStandEl, false);
+        setVisible(confirmBtnEl, betTotal > 0);
+    } else {
+        setVisible(parentHitStandEl, true);
     }
 }
 
@@ -194,10 +193,9 @@ function handleMinusBet() {
 }
 
 function handleConfirmBet(event) {
-    event.target.style.visibility = 'hidden';
-    plusFiveBtnEl.style.visibility = 'hidden';
-    minusFiveBtnEl.style.visibility = 'hidden';
-    parentHitStandEl.style.visibility = 'visible';
+    setVisible(event.target, false);
+    setVisible(betButtonsEl, false);
+    setVisible(parentHitStandEl, true);
 
     while (dealerHand.length < 2) {
         dealDealerHand();
@@ -236,7 +234,7 @@ function handleHitBtn() {
 }
 
 function handleStandBtn() {
-    parentHitStandEl.style.visibility = 'hidden';
+    setVisible(parentHitStandEl, false);
     showSecondCard = true;   
     while (dealerHand.length < 5 && dealerHandValue < 17) {
             dealDealerHand();
