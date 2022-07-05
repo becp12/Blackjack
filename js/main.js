@@ -61,9 +61,11 @@ function reset() {
     playerHand = [];
     playerHandValue = 0;
     dealerHand = [];
-    dealerHandValue = '???';
+    dealerHandValue = 0;
     shuffledDeck = getNewShuffledDeck();
     gameStatus = null;
+    showSecondCard = false;
+    dealerTotalEl.textContent = '???';
 
     const resetCards = function(el) {
         el.classList.remove(...el.classList);
@@ -122,10 +124,10 @@ function renderPlayerHandValue() {
 function renderMoney() {
     if (gameStatus === null) {
         betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-        bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
-    } else {
         bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
+    } else {
         betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
+        bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
     }
 }
 
@@ -141,6 +143,7 @@ function renderButtons() {
             setVisible(betButtonsEl, false);
             setVisible(confirmBtnEl, false);
             setVisible(parentHitStandEl, false);
+        return;
     }
 
     if (isVisible(betButtonsEl)) {
@@ -156,7 +159,7 @@ function renderWinner() {
     } else if (gameStatus === 'PlayerHigher' || gameStatus === 'DealerBust' || gameStatus === 'Player21') {
         winnerMessageEl.textContent = 'Player Wins!';
     } else if (gameStatus === 'PlayerBust') {
-        winnerMessageEl.textContent = 'Player Loses!';
+        winnerMessageEl.textContent = 'Player Bust!';
     } else if (gameStatus === 'Tie') {
         winnerMessageEl.textContent = 'You Tied!'
     } else if (gameStatus === 'DealerHigher' || gameStatus === 'Dealer21') {
@@ -202,6 +205,7 @@ function handlePlusBet() {
     if (betTotal === availableCash)
         return;
     betTotal += 5;
+    availableCash = availableCash - betTotal;
     render();
 }
 
@@ -209,6 +213,7 @@ function handleMinusBet() {
     if (betTotal === 0) 
         return;
     betTotal -= 5;
+    availableCash = availableCash - betTotal;
     render();
 }
 
@@ -225,7 +230,7 @@ function handleConfirmBet(event) {
         betTotal = 0;
     } else if (playerHandValue > 21) {
         gameStatus = 'PlayerBust';
-        availableCash -= betTotal;
+        // availableCash -= betTotal;
         betTotal = 0;
     } else {
         gameStatus = null;
@@ -245,7 +250,7 @@ function handleHitBtn() {
         betTotal = 0;
     } else if (playerHandValue > 21) {
         gameStatus = 'PlayerBust';
-        availableCash -= betTotal;
+        // availableCash -= betTotal;
         betTotal = 0;
     } else {
         gameStatus = null;
@@ -336,6 +341,7 @@ function determineWinner() {
 function calculateWinnings() {
     if (showSecondCard === false ||
         gameStatus === null) return;
+    // availableCash -= betTotal;
     if (gameStatus === 'PlayerHigher') {
         availableCash += (betTotal * 2);
         betTotal = 0;
@@ -343,10 +349,10 @@ function calculateWinnings() {
         availableCash += (betTotal * 2);
         betTotal = 0;
     } else if (gameStatus === 'DealerHigher') {
-        availableCash -= betTotal;
+        // availableCash -= betTotal;
         betTotal = 0;
     } else if (gameStatus === 'Dealer21') {
-        availableCash -= betTotal;
+        // availableCash -= betTotal;
         betTotal = 0;
     } else if (gameStatus === 'Tie') {
         availableCash += (betTotal);
