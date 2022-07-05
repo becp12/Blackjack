@@ -44,23 +44,37 @@ minusFiveBtnEl.addEventListener('click', handleMinusBet);
 confirmBtnEl.addEventListener('click', handleConfirmBet);
 hitBtnEl.addEventListener('click', handleHitBtn);
 standBtnEl.addEventListener('click', handleStandBtn);
+newGameBtnEl.addEventListener('click', handleNewGameBtn);
+newHandBtnEl.addEventListener('click', handleNewHandBtn);
 
 /*----- init functions -----*/
 
 init();
 
 function init() {
-    betTotal = 0;
     availableCash = 200;
+    reset();
+};
+
+function reset() {
+    betTotal = 0;
     playerHand = [];
     playerHandValue = 0;
     dealerHand = [];
-    dealerHandValue = 0;
+    dealerHandValue = '???';
     shuffledDeck = getNewShuffledDeck();
     gameStatus = null;
 
+    const resetCards = function(el) {
+        el.classList.remove(...el.classList);
+        el.classList.add('card');
+    }
+
+    dealerHandEl.forEach(resetCards);
+    playerHandEl.forEach(resetCards);
+
     render();
-};
+}
 
 /*----- render functions -----*/
 
@@ -241,7 +255,15 @@ function handleStandBtn() {
     };
     determineWinner();
     render();
-}
+};
+
+function handleNewGameBtn() {
+    init();
+};
+
+function handleNewHandBtn() {
+    reset();
+};
 
 /*----- additional functions -----*/
 
