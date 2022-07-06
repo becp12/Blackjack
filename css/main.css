@@ -19,7 +19,7 @@ body {
 main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 20vmin 0.75fr 12vmin 1fr;
+    grid-template-rows: 20vmin 0.75fr 15vmin .5fr;
     gap: 2vmin;
     width: 100%;
 }
@@ -32,7 +32,7 @@ h1 {
     width: 100%;
     height: 100%;
     font-size: 13vmin;
-    text-shadow: 0px 0px 5px red, 0px 0px 10px red, 0px 0px 10px red, 0px 0px 20px red;
+    text-shadow: 0px 0px 5px blue, 0px 0px 10px blue, 0px 0px 10px blue, 0px 0px 20px blue;
     color: whitesmoke;
     font-family: 'Alfa Slab One', Merriweather, 'Abril Fatface', cursive;
     font-weight: 100;
@@ -41,7 +41,7 @@ h1 {
 #dealers-interface {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 20vmin 5vmin;
+    grid-template-rows: 15vmin 5vmin;
     gap: 1vmin;
 }
 
@@ -52,17 +52,18 @@ h1 {
 #button-row {
     display: grid;
     grid-column: span 3;
-    grid-template-rows: 7vmin 5vmin;
+    grid-template-rows: 7vmin 8vmin;
     text-align: center;
 }
 
 #winner-message {
-    font-size: 5vmin;
+    font-size: 7vmin;
 }
 
 .play-buttons {
     margin: 1vmin 1vmin;
-    padding: 1.5vmin;
+    padding: 1vmin 5vmin;
+    font-size: 2.5vmin;
 }
 
 .hand-header {
@@ -121,7 +122,7 @@ h1 {
     display: grid;
     height: 100%;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 20vmin 10vmin;
+    grid-template-rows: 1fr 15vmin 5vmin;
     gap: 1vmin;
 }
 
@@ -141,17 +142,19 @@ h1 {
 }
 
 .hit-stnd-btn {
-    margin: 2vmin;
-    font-size: 7vmin;
-    height: 10vmin;
+    margin: 2vmin 7vmin;
+    font-size: 4vmin;
+    height: 6vmin;
 
-}
-
+} 
+ 
 button {
     border-radius: 3vmin;
-    background-color: lightskyblue;
+    background-color: firebrick;
+    /* margin: 2vmin 7vmin;
+    padding: 2vmin; */
 }
 
 button:hover {
-    background-color: purple;
+    background-color: steelblue;
 }
