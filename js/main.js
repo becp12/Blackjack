@@ -98,6 +98,11 @@ function renderDealerHand() {
         // Assign card face unless it's the not second card or showSecondCard is false
         const cardClass = (i !== 1 || showSecondCard) ? `${card.face}` : 'back';
         dealerHandEl[i].classList.add(cardClass);
+        setVisible(dealerHandEl[i], true);
+    };
+    
+    for (let i = dealerHand.length; i < dealerHandEl.length; i++) {
+        setVisible(dealerHandEl[i], false);
     };
 }
 
@@ -111,6 +116,11 @@ function renderPlayerHand() {
     for (let i = 0; i < playerHand.length; i++) {
         const card = playerHand[i];
         playerHandEl[i].classList.add(`${card.face}`);
+        setVisible(playerHandEl[i], true);
+    };
+    
+    for (let i = playerHand.length; i < playerHandEl.length; i++) {
+        setVisible(playerHandEl[i], false);
     };
 };
 
