@@ -135,19 +135,15 @@ function renderButtons() {
             setVisible(confirmBtnEl, betTotal > 0);
         }
     } else {
-        /*if (availableCash >= 5) {*/
-            setVisible(buttonRowEl, true);
-            //newHandBtnEl.style.display = 'inline';
-            setVisible(betButtonsEl, false);
-            setVisible(confirmBtnEl, false);
-            setVisible(parentHitStandEl, false);
-        /*} else {
-            setVisible(buttonRowEl, true);
+        setVisible(buttonRowEl, true);
+        setVisible(betButtonsEl, false);
+        setVisible(confirmBtnEl, false);
+        setVisible(parentHitStandEl, false);
+        if (availableCash >= 5) {
+            newHandBtnEl.style.display = 'inline';
+         } else {
             newHandBtnEl.style.display ='none';
-            setVisible(betButtonsEl, false);
-            setVisible(confirmBtnEl, false);
-            setVisible(parentHitStandEl, false);
-        }*/
+        }
         return;
     }
 
@@ -213,7 +209,7 @@ function getNewShuffledDeck() {
 /*----- handler functions -----*/
 
 function handlePlusBet() {
-    if (betTotal === availableCash)
+    if (availableCash === 0)
         return;
     betTotal += 5;
     availableCash -= 5;
