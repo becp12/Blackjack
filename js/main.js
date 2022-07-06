@@ -123,14 +123,8 @@ function renderPlayerHandValue() {
 };
 
 function renderMoney() {
-    if (gameStatus === null) {
     betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
     bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
-
-    } else {
-        betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-        bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
-    }
 }
 
 function renderButtons() {
@@ -253,6 +247,9 @@ function handleConfirmBet(event) {
     };
     render();
 
+    if (playerHandValue === 21) {
+        return;
+    }
     setVisible(event.target, false);
     setVisible(betButtonsEl, false);
     setVisible(parentHitStandEl, true);
@@ -275,6 +272,7 @@ function handleHitBtn() {
 
 function handleStandBtn() {
     setVisible(parentHitStandEl, false);
+
     showSecondCard = true;   
     while (dealerHand.length < 5 && dealerHandValue < 17) {
             dealDealerHand();
