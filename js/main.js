@@ -81,6 +81,7 @@ function reset() {
 /*----- render functions -----*/
 
 function render() {
+
     renderDealerHand();
     renderDealerHandValue();
     renderPlayerHand();
@@ -123,12 +124,13 @@ function renderPlayerHandValue() {
 
 function renderMoney() {
     if (gameStatus === null) {
+    betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
+    bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
+
+    } else {
         betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-        bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
-    } /*else {
-        betTotalEl.textContent = `$${betTotal.toFixed(2)}`;
-        bankTotalEl.textContent = `$${(availableCash).toFixed(2)}`;
-    }*/
+        bankTotalEl.textContent = `$${(availableCash - betTotal).toFixed(2)}`;
+    }
 }
 
 function renderButtons() {
@@ -139,10 +141,19 @@ function renderButtons() {
             setVisible(confirmBtnEl, betTotal > 0);
         }
     } else {
+        /*if (availableCash >= 5) {*/
             setVisible(buttonRowEl, true);
+            //newHandBtnEl.style.display = 'inline';
             setVisible(betButtonsEl, false);
             setVisible(confirmBtnEl, false);
             setVisible(parentHitStandEl, false);
+        /*} else {
+            setVisible(buttonRowEl, true);
+            newHandBtnEl.style.display ='none';
+            setVisible(betButtonsEl, false);
+            setVisible(confirmBtnEl, false);
+            setVisible(parentHitStandEl, false);
+        }*/
         return;
     }
 
@@ -211,7 +222,7 @@ function handlePlusBet() {
     if (betTotal === availableCash)
         return;
     betTotal += 5;
-    availableCash = availableCash - betTotal;
+    availableCash -= 5;
     render();
 }
 
@@ -219,7 +230,7 @@ function handleMinusBet() {
     if (betTotal === 0) 
         return;
     betTotal -= 5;
-    availableCash = availableCash - betTotal;
+    availableCash += 5;
     render();
 }
 
@@ -236,7 +247,6 @@ function handleConfirmBet(event) {
         betTotal = 0;
     } else if (playerHandValue > 21) {
         gameStatus = 'PlayerBust';
-        // availableCash -= betTotal;
         betTotal = 0;
     } else {
         gameStatus = null;
@@ -256,7 +266,6 @@ function handleHitBtn() {
         betTotal = 0;
     } else if (playerHandValue > 21) {
         gameStatus = 'PlayerBust';
-        // availableCash -= betTotal;
         betTotal = 0;
     } else {
         gameStatus = null;
@@ -347,7 +356,6 @@ function determineWinner() {
 function calculateWinnings() {
     if (showSecondCard === false ||
         gameStatus === null) return;
-    // availableCash -= betTotal;
     if (gameStatus === 'PlayerHigher') {
         availableCash += (betTotal * 2);
         betTotal = 0;
@@ -355,10 +363,8 @@ function calculateWinnings() {
         availableCash += (betTotal * 2);
         betTotal = 0;
     } else if (gameStatus === 'DealerHigher') {
-        // availableCash -= betTotal;
         betTotal = 0;
     } else if (gameStatus === 'Dealer21') {
-        // availableCash -= betTotal;
         betTotal = 0;
     } else if (gameStatus === 'Tie') {
         availableCash += (betTotal);
