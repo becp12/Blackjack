@@ -67,7 +67,7 @@ function reset() {
     showSecondCard = false;
     dealerTotalEl.textContent = '???';
 
-    const resetCards = function(el) {
+    const resetCards = function (el) {
         el.classList.remove(...el.classList);
         el.classList.add('card');
     }
@@ -87,7 +87,7 @@ function render() {
     renderPlayerHand();
     renderPlayerHandValue();
     renderMoney();
-    renderButtons();   
+    renderButtons();
     renderWinner();
 };
 
@@ -100,7 +100,7 @@ function renderDealerHand() {
         dealerHandEl[i].classList.add(cardClass);
         setVisible(dealerHandEl[i], true);
     };
-    
+
     for (let i = dealerHand.length; i < dealerHandEl.length; i++) {
         setVisible(dealerHandEl[i], false);
     };
@@ -109,7 +109,7 @@ function renderDealerHand() {
 function renderDealerHandValue() {
     if (showSecondCard) {
         dealerTotalEl.textContent = dealerHandValue;
-    }   
+    }
 }
 
 function renderPlayerHand() {
@@ -118,7 +118,7 @@ function renderPlayerHand() {
         playerHandEl[i].classList.add(`${card.face}`);
         setVisible(playerHandEl[i], true);
     };
-    
+
     for (let i = playerHand.length; i < playerHandEl.length; i++) {
         setVisible(playerHandEl[i], false);
     };
@@ -128,8 +128,8 @@ function renderPlayerHandValue() {
     playerTotalEl.textContent = playerHandValue;
     if (playerHandValue >= 21 ||
         playerHand.length === 5) {
-            setVisible(parentHitStandEl, false);
-        };
+        setVisible(parentHitStandEl, false);
+    };
 };
 
 function renderMoney() {
@@ -151,8 +151,8 @@ function renderButtons() {
         setVisible(parentHitStandEl, false);
         if (availableCash >= 5) {
             newHandBtnEl.style.display = 'inline';
-         } else {
-            newHandBtnEl.style.display ='none';
+        } else {
+            newHandBtnEl.style.display = 'none';
         }
         return;
     }
@@ -190,14 +190,14 @@ function renderWinner() {
 function buildMasterDeck() {
     const deck = [];
     // Use nested forEach to generate card objects
-    suits.forEach(function(suit) {
-        ranks.forEach(function(rank) {
-        deck.push({
-            // The 'face' property maps to the library's CSS classes for cards
-            face: `${suit}${rank}`,
-            // Setting the 'value' property for game of blackjack, not war
-            value: Number(rank) || (rank === 'A' ? 11 : 10)
-        });
+    suits.forEach(function (suit) {
+        ranks.forEach(function (rank) {
+            deck.push({
+                // The 'face' property maps to the library's CSS classes for cards
+                face: `${suit}${rank}`,
+                // Setting the 'value' property for game of blackjack, not war
+                value: Number(rank) || (rank === 'A' ? 11 : 10)
+            });
         });
     });
     return deck;
@@ -227,7 +227,7 @@ function handlePlusBet() {
 }
 
 function handleMinusBet() {
-    if (betTotal === 0) 
+    if (betTotal === 0)
         return;
     betTotal -= 5;
     availableCash += 5;
@@ -239,7 +239,7 @@ function handleConfirmBet(event) {
         dealDealerHand();
     }
     while (playerHand.length < 2) {
-        dealPlayerHand() 
+        dealPlayerHand()
     }
     if (playerHandValue === 21) {
         gameStatus = 'playerBlackjack';
@@ -279,9 +279,9 @@ function handleHitBtn() {
 function handleStandBtn() {
     setVisible(parentHitStandEl, false);
 
-    showSecondCard = true;   
+    showSecondCard = true;
     while (dealerHand.length < 5 && dealerHandValue < 17) {
-            dealDealerHand();
+        dealDealerHand();
     };
     determineWinner();
     render();
@@ -298,10 +298,10 @@ function handleNewHandBtn() {
 /*----- additional functions -----*/
 
 function dealPlayerHand() {
-    playerHand.push(shuffledDeck.pop()); 
+    playerHand.push(shuffledDeck.pop());
 
     let sum = 0;
-    let aceCount = 0;    
+    let aceCount = 0;
     for (let i = 0; i < playerHand.length; i++) {
         const card = playerHand[i];
         if (card.value === 11) {
@@ -330,7 +330,7 @@ function dealDealerHand() {
         }
         sum += card.value;
     };
-    
+
     while (sum > 21 && aceCount > 0) {
         sum -= 10;
         aceCount--;
