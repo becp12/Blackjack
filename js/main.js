@@ -148,7 +148,8 @@ function renderButtons() {
         setVisible(buttonRowEl, true);
         setVisible(betButtonsEl, false);
         setVisible(confirmBtnEl, false);
-        setVisible(parentHitStandEl, false);
+        setVisible(parentHitStandEl, false)
+        setVisible(hitBtnEl, false);
         if (availableCash >= 5) {
             newHandBtnEl.style.display = 'inline';
         } else {
@@ -157,14 +158,16 @@ function renderButtons() {
         return;
     }
 
-    if (playerHand.length === 5) {
-        setVisible(hitBtnEl, false);
-    }
-
     if (isVisible(betButtonsEl)) {
         setVisible(parentHitStandEl, false);
     } else {
         setVisible(parentHitStandEl, true);
+    }
+
+    if (playerHand.length === 5) {
+        setVisible(hitBtnEl, false);
+    } else if (gameStatus === null && playerHand.length > 0 && playerHand.length < 5) {
+        setVisible(hitBtnEl, true);
     }
 }
 
