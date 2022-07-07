@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,17 +8,25 @@
     <title>BLACKJACK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Merriweather:wght@900&family=Alfa+Slab+One&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/card-deck-css/css/cardstarter.css">
     <script defer src="js/main.js"></script>
 </head>
+
 <body class="flex-ctr">
     <main>
-        <h1>BLACKJACK</h1> <!--Span all columns-->
-        <div><!--SPACING DIV--></div>
-        <section id="dealers-interface"> <!--Dealers hand, dealer's score, dealer hand heading-->
-            <section class="current-hand" id="dealers-hand"><!--dealers hand-->
+        <h1>BLACKJACK</h1>
+        <!--Span all columns-->
+        <div>
+            <!--SPACING DIV-->
+        </div>
+        <section id="dealers-interface">
+            <!--Dealers hand, dealer's score, dealer hand heading-->
+            <section class="current-hand" id="dealers-hand">
+                <!--dealers hand-->
                 <div class="card" id="dealer-card-one">
                     CARD ONE
                 </div>
@@ -34,14 +43,15 @@
                     CARD FIVE
                 </div>
             </section>
-            <span>Count:<br>
-                <span id="dealer-card-value">???</span><!--(A = 11)--><br>
-                <!-- <span id="dealer-card-value-01">___</span> (A = 1) -->
+            <span class="count">Count<br>
+                <span id="dealer-card-value">???</span>
             </span>
             <span class="hand-header" id="dealers-hand-header" class="flex-ctr">Dealer's Hand</span>
         </section>
 
-        <div><!--SPACING DIV--></div>
+        <div>
+            <!--SPACING DIV-->
+        </div>
         <div id="button-row">
             <div class="flex-ctr" id="winner-message"></div>
             <div class="play-again new-hand flex-ctr">
@@ -50,10 +60,7 @@
             </div>
         </div>
 
-            <!--3 columns / 3 rows-->
-        <section id="money-info"><!--currentbet box, bank box, bet buttons-->
-            <!--4 rows / 2 columns-->
-            <!--need empty block in cell 4-->
+        <section id="money-info">
             <div id="bet-buttons">
                 <button id="confirm">CONFIRM BET</button>
                 <button id="plusFive">+ $5</button>
@@ -63,19 +70,21 @@
                 CURRENT BET
             </div>
             <div id="bet-total">
-                    $--.--
-            </div>         
-            <div id="bank">  
+                $--.--
+            </div>
+            <div id="bank">
                 BANK
             </div>
             <div id="bank-total">
-                    $---.--
+                $---.--
             </div>
         </section>
-        <div><!--SPACING DIV--></div>
-        <section id="players-hand-column"><!--players hand, player hand heading,-->
-            <!--3 rows / 2 columns-->
-            <span class="hand-header" id="players-hand-header">Your Hand</span><!--span 2 columns-->
+        <div>
+            <!--SPACING DIV-->
+        </div>
+        <section id="players-hand-column">
+            <span class="hand-header" id="players-hand-header">Your Hand</span>
+            <!--players hand-->
             <section class="current-hand" id="players-hand">
                 <div class="card" id="player-card-one">
                     CARD ONE
@@ -93,16 +102,16 @@
                     CARD FIVE
                 </div>
             </section>
-            <span>Count:<br>
+            <span class="count">Count<br>
                 <span id="player-card-value">___</span>
             </span>
-            <div id="chips"><!--span 2 columns
+            <div id="chips">
+                <!--span 2 columns
                 CHIPS CHIPS CHIPS-->
             </div>
         </section>
 
         <section id="hit-stand">
-            <!--no grid required-->
             <button class="hit-stnd-btn" id="hit-btn">
                 HIT
             </button>
@@ -112,4 +121,5 @@
         </section>
     </main>
 </body>
+
 </html>
