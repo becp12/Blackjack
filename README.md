@@ -32,15 +32,17 @@ Winning State<br>
 To intiate play you must press the +$5 button until you are happy with your bet total, then select confirm bet.<br>
 
 The hit button will deal another card to your hand and the stand button will allow the dealer to receive more cards to their hand. You will not be able to see the dealer's hand if you get any of the following:
-- If you get 21 on your first two cards
-- If you get 21 over 3+ cards
+- If you get 21 on your first two cards (eg. Ace & Face/10 card)
+- If you get 21 over 3+ cards (eg. 4, 5, Queen, 2)
 - If you bust (go over 21)
+- If you get a total of 5 cards
 
 If you do not get any of the above and decide to "stand" (stay on the number you are at with the cards you have [Note: you will not be able to get any more cards after you stand]), the dealer's second card will be revealed, their count will update and they will keep getting cards until one of the following:
-- They reach 17 (they must stand if they reach 17)
+- They reach 17 (they must stand if they reach between 17 & 21)
 - They get 21 (with either 2 or more cards)
+- They bust (go over 21)
 
-Payout information:<br>
+### Payout information:<br>
 - Blackjack pays out 3:2 (if you bet $1, you get your bet back and you get $1.50 extra<br>
 - Player Value higher than the dealer pays out 2:1 (if you bet $1, you get your bet back and you get $1 extra)<br>
 - Player Value and Dealer Value pays out 1:1 (if you bet $1, you get your bet back)<br>
