@@ -89,19 +89,19 @@ h1 {
 
 .current-hand div:not(:first-child) {
     margin-left: -5vmin;
-    margin-top: 1vmin;
+    margin-top: 1.4vmin;
 }
 
 .current-hand div:nth-child(3) {
-    margin-top: 2vmin;
+    margin-top: 2.4vmin;
 }
 
 .current-hand div:nth-child(4) {
-    margin-top: 3vmin;
+    margin-top: 3.4vmin;
 }
 
 .current-hand div:nth-child(5) {
-    margin-top: 4vmin;
+    margin-top: 4.4vmin;
 }
 
 #dealers-interface,
