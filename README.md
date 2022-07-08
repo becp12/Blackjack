@@ -19,7 +19,6 @@ During Play
 ![Winner Screen](https://i.imgur.com/qtfMsPD.png)  
 Winning State  
 
-
 # TECHNOLOGIES USED
 - JavaScript
 - HTML
@@ -49,6 +48,7 @@ If you do not get any of the above and decide to "stand" (stay on the number you
 - Dealer Value higher or gets 21, you lose your bet.  
 
 # NEXT STEPS  
+Potential Future Enhancements 
 - Able to bet different multiples, not just $5 multiples  
 - Five-Card-Charlie - win if you get to 5 cards without going over 21  
 - Doulbe down (double your bet after the hands are dealt if you think you have a good chance of winning, you will not be able to see the whole dealer hand)  
