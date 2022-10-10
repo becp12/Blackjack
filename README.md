@@ -51,7 +51,7 @@ If you do not get any of the above and decide to "stand" (stay on the number you
 Potential Future Enhancements 
 - Able to bet different multiples, not just $5 multiples  
 - Five-Card-Charlie - win if you get to 5 cards without going over 21  
-- Doulbe down (double your bet after the hands are dealt if you think you have a good chance of winning, you will not be able to see the whole dealer hand)  
+- Double down (double your bet after the hands are dealt if you think you have a good chance of winning, you will not be able to see the whole dealer hand)  
 - Split (get two of the same card and you can split your hand into two hands but you also must match your bet for that hand too)  
 
 [Back to Top](#blackjack)  
